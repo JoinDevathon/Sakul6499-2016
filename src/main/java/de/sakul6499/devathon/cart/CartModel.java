@@ -8,6 +8,7 @@ import org.bukkit.craftbukkit.v1_10_R1.entity.CraftMinecartChest;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
+import org.bukkit.event.vehicle.VehicleCreateEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.json.simple.JSONObject;
@@ -20,6 +21,12 @@ import java.util.UUID;
  * Created by lukas on 05.11.16.
  */
 public final class CartModel {
+
+    public final static String ITEM_NAME;
+
+    static {
+        ITEM_NAME = "Devathon Cart";
+    }
 
     public static CartModel FromJSON(String json) throws ParseException {
         JSONObject jsonObject = (JSONObject) new JSONParser().parse(json);
@@ -77,31 +84,29 @@ public final class CartModel {
         return this;
     }
 
-    public final CartModel kill(boolean drop) {
+    public final CartModel kill() {
         if (cart != null && !cart.isDead()) cart.remove();
         if (itemHolder != null && !itemHolder.isDead()) itemHolder.remove();
-
-        if (drop) {
-            ItemStack dropStack = new ItemStack(Material.STORAGE_MINECART);
-            ItemMeta dropMeta = dropStack.getItemMeta();
-
-            dropMeta.setDisplayName(name);
-            dropMeta.addEnchant(Enchantment.LURE, 10, true);
-            dropMeta.setLore(Lists.newArrayList("Devathon Cart"));
-
-            dropStack.setItemMeta(dropMeta);
-            location.getWorld().dropItem(location.toBukkitLocation(), dropStack);
-        }
 
         return this;
     }
 
-    public final CartModel kill() {
-        return kill(true);
+    public final CartModel dropItem() {
+        ItemStack dropStack = new ItemStack(Material.STORAGE_MINECART);
+        ItemMeta dropMeta = dropStack.getItemMeta();
+
+        dropMeta.setDisplayName(name);
+        dropMeta.addEnchant(Enchantment.LURE, 10, true);
+        dropMeta.setLore(Lists.newArrayList(ITEM_NAME));
+
+        dropStack.setItemMeta(dropMeta);
+        location.getWorld().dropItem(location.toBukkitLocation(), dropStack);
+
+        return this;
     }
 
     public final CartModel update() {
-        kill(false);
+        kill();
         spawn();
 
         return this;

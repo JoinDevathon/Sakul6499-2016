@@ -1,4 +1,4 @@
-package de.sakul6499.devathon;
+package de.sakul6499.devathon.listener;
 
 import de.sakul6499.devathon.cart.CartManager;
 import de.sakul6499.devathon.cart.CartModel;
@@ -9,7 +9,7 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 /**
  * Created by lukas on 05.11.16.
  */
-public class CommandHandler implements Listener {
+public class ChatListener implements Listener {
     @EventHandler
     public void onPlayerCommandPreprocessEvent(PlayerCommandPreprocessEvent event) {
         System.out.println("Command: " + event.getMessage());

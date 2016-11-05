@@ -145,7 +145,7 @@ public final class JSONLocation {
     }
 
     public boolean fullEqual(JSONLocation location) {
-        return getWorldID() == location.getWorldID() &&
+        return getWorldID().equals(location.getWorldID()) &&
                 getX() == location.getX() &&
                 getY() == location.getY() &&
                 getZ() == location.getZ() &&
@@ -154,7 +154,7 @@ public final class JSONLocation {
     }
 
     public boolean fullNormalEqual(JSONLocation location) {
-        return getWorldID() == location.getWorldID() &&
+        return getWorldID().equals(location.getWorldID()) &&
                 getNormalX() == location.getNormalX() &&
                 getNormalY() == location.getNormalY() &&
                 getNormalZ() == location.getNormalZ() &&
@@ -163,38 +163,17 @@ public final class JSONLocation {
     }
 
     public boolean coordinatesEqual(JSONLocation location) {
-        return getWorldID() == location.getWorldID() &&
+        return getWorldID().equals(location.getWorldID()) &&
                 getX() == location.getX() &&
                 getY() == location.getY() &&
                 getZ() == location.getZ();
     }
 
     public boolean coordinatesNormalEqual(JSONLocation location) {
-        if (!getWorldID().equals(location.getWorldID())) {
-            System.out.println("1");
-
-            System.out.println(getWorldID() + " <-> " + location.getWorldID());
-            return false;
-        }
-
-        if (getNormalX() != location.getNormalX()) {
-            System.out.println("2");
-
-            System.out.println(getNormalX() + " <-> " + location.getNormalX());
-            return false;
-        }
-
-        if (getNormalY() != location.getNormalY()) {
-            System.out.println("3");
-            return false;
-        }
-
-        if (getNormalZ() != location.getNormalZ()) {
-            System.out.println("4");
-            return false;
-        }
-
-        return true;
+        return getWorldID().equals(location.getWorldID()) &&
+                getNormalX() == location.getNormalX() &&
+                getNormalY() == location.getNormalY() &&
+                getNormalZ() == location.getNormalZ();
     }
 
     @Override

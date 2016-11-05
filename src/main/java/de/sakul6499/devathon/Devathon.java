@@ -2,6 +2,8 @@ package de.sakul6499.devathon;
 
 import de.sakul6499.devathon.cart.CartManager;
 import de.sakul6499.devathon.cart.CartModel;
+import de.sakul6499.devathon.listener.ChatListener;
+import de.sakul6499.devathon.listener.CreateListener;
 import de.sakul6499.devathon.listener.DeathListener;
 import de.sakul6499.devathon.listener.InventoryClose;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -18,9 +20,10 @@ public class Devathon extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        getServer().getPluginManager().registerEvents(new CommandHandler(), this);
+        getServer().getPluginManager().registerEvents(new ChatListener(), this);
         getServer().getPluginManager().registerEvents(new InventoryClose(), this);
         getServer().getPluginManager().registerEvents(new DeathListener(), this);
+        getServer().getPluginManager().registerEvents(new CreateListener(), this);
 
         try {
             File cartFile = new File(getDataFolder(), "carts.json");

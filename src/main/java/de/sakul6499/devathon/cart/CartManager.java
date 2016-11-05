@@ -59,25 +59,37 @@ public final class CartManager {
         }
     }
 
-    public boolean remove(UUID id) {
+    public boolean kill(UUID id) {
         CartModel cartModel = getByID(id);
-        if (cartModel == null) {
-            return false;
-        }
+        if(cartModel == null) return false;
 
         remove(cartModel);
+        cartModel.dropItem();
+        return true;
+    }
 
+    public boolean kill(Location location) {
+        CartModel cartModel = getByLocation(location);
+        if (cartModel == null) return false;
+
+        remove(cartModel);
+        cartModel.dropItem();
+        return true;
+    }
+
+    public boolean remove(UUID id) {
+        CartModel cartModel = getByID(id);
+        if (cartModel == null) return false;
+
+        remove(cartModel);
         return true;
     }
 
     public boolean remove(Location location) {
         CartModel cartModel = getByLocation(location);
-        if (cartModel == null) {
-            return false;
-        }
+        if (cartModel == null) return false;
 
         remove(cartModel);
-
         return true;
     }
 
