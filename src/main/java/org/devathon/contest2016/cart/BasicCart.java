@@ -6,22 +6,32 @@ import org.bukkit.craftbukkit.v1_10_R1.entity.CraftMinecartChest;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
+import org.json.simple.JSONObject;
+
+import java.util.UUID;
 
 /**
  * Created by lukas on 05.11.16.
  */
 public final class BasicCart {
-    
+
+    private final UUID cartID;
+    {
+        cartID = UUID.randomUUID();
+    }
+
+    private final String name;
     private final Location location;
 
     private CraftMinecartChest cart;
     private ArmorStand itemHolder;
     
-    public BasicCart(Location location) {
+    public BasicCart(String name, Location location) {
+        this.name = name;
         this.location = location;
     }
     
-    public void spawn() {
+    public final void spawn() {
         cart = (CraftMinecartChest) location.getWorld().spawnEntity(new Location(location.getWorld(), location.getBlockX(), location.getBlockY(), location.getBlockZ()), EntityType.MINECART_CHEST);
         cart.setInvulnerable(true);
         cart.setGravity(false);
@@ -39,7 +49,25 @@ public final class BasicCart {
         itemHolder.setVisible(false);
     }
 
-    public boolean spawned() {
+    public final boolean spawned() {
         return cart != null && itemHolder != null;
+    }
+
+    public final UUID getCartID() {
+        return cartID;
+    }
+
+    public final String getName() {
+        return name;
+    }
+
+    public final Location getLocation() {
+        return location;
+    }
+
+    @Override
+    public String toString() {
+        JSONObject jsonObject = new JSONObject();
+        //jsonObject.put()
     }
 }

@@ -1,0 +1,52 @@
+apply plugin: 'base'
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+
+    maven {
+        name 'spigot-repo'
+        url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots'
+    }
+
+    maven {
+        name = 'sonatype'
+        url = 'https://oss.sonatype.org/content/groups/public/'
+    }
+}
+
+dependencies {
+    compile 'org.spigotmc:spigot-api:1.10.2-R0.1-SNAPSHOT'
+
+    compile files('libs/spigot.jar')
+}
+
+clean {
+    delete 'server'
+}
+
+task copyServer(type: Copy) {
+    from "${projectDir}/libs"
+    into "server/"
+}
+
+task copyCorePlugin(type: Copy, dependsOn: [':build', ':copyServer']) {
+    from project.buildDir.getAbsolutePath() + "/libs"
+    into 'server/plugins/'
+}
+
+task run(type: JavaExec, dependsOn: ['copyCorePlugin']) {
+    doFirst {
+        standardInput = System.in
+        standardOutput = System.out
+    }
+
+    main = "org.bukkit.craftbukkit.Main"
+    classpath "server/spigot.jar"
+    systemProperties = ['com.mojang.eula.agree': 'true']
+    args('--world-dir', './worlds/')
+    workingDir = "server/"
+}

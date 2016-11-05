@@ -18,4 +18,3 @@ public class DevathonPlugin extends JavaPlugin {
         System.out.println("Disabled!");
     }
 }
-

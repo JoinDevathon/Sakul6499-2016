@@ -6,3 +6,7 @@ target/
 # idea files
 .idea/
 *.iml
+
+# gradle files
+.gradle/
+libs/
