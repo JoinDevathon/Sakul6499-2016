@@ -16,7 +16,7 @@ public final class ModelHandler {
         INSTANCE = new ModelHandler();
     }
 
-    public ModelHandler GetInstance() {
+    public static ModelHandler GetInstance() {
         return INSTANCE;
     }
 
