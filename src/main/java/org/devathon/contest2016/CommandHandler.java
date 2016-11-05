@@ -13,6 +13,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
+import org.devathon.contest2016.cart.BasicCart;
 import org.devathon.contest2016.model.AdvBlockTest;
 import org.devathon.contest2016.model.ModelHandler;
 import org.devathon.contest2016.model.TestBasicBlock;
@@ -40,34 +41,10 @@ public class CommandHandler implements Listener {
                 event.getPlayer().sendRawMessage("Spawned!");
                 break;
             case "/spawn":
-//                Location location = event.getPlayer().getLocation();
-//                location.getBlock().setType(Material.COMMAND);
-//                CommandBlock commandBlock = (CommandBlock) location.getBlock();
+                BasicCart basicCart = new BasicCart(event.getPlayer().getLocation());
+                basicCart.spawn();
 
-                Location origin = event.getPlayer().getLocation();
-                Location commandLocation = new Location(origin.getWorld(), origin.getBlockX(), origin.getBlockY(), origin.getBlockZ());
-//                System.out.println(origin);
-
-                CraftMinecartChest commandStand = (CraftMinecartChest) commandLocation.getWorld().spawnEntity(commandLocation, EntityType.MINECART_CHEST);
-//                commandStand.setHelmet(new ItemStack(Material.COMMAND_MINECART));
-                commandStand.setInvulnerable(true);
-                commandStand.setGravity(false);
-                commandStand.setSilent(true);
-                commandStand.setMaxSpeed(0);
-                commandStand.setSlowWhenEmpty(false);
-
-//                commandStand.setBasePlate(false);
-//                commandStand.setVisible(false);
-
-//                Location origin_aligned = origin.subtract(0, -4, 0);
-//                System.out.println(origin_aligned);
-                Location pickaxeLocation = new Location(origin.getWorld(), origin.getBlockX(), origin.getBlockY() - 1.75, origin.getBlockZ() + 0.8);
-                ArmorStand pickaxeStand = (ArmorStand) pickaxeLocation.getWorld().spawnEntity(pickaxeLocation, EntityType.ARMOR_STAND);
-                pickaxeStand.setHelmet(new ItemStack(Material.DIAMOND_PICKAXE));
-                pickaxeStand.setInvulnerable(true);
-                pickaxeStand.setGravity(false);
-                pickaxeStand.setBasePlate(false);
-                pickaxeStand.setVisible(false);
+                event.setCancelled(true);
                 break;
             default:
                 System.out.println("Unknown command!");
