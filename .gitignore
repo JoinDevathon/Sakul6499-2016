@@ -1,3 +1,8 @@
+# maven stuff
 build/
 server/
 target/
+
+# idea files
+.idea/
+*.iml
