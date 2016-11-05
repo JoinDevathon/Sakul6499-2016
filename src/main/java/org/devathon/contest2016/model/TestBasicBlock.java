@@ -1,17 +1,19 @@
 package org.devathon.contest2016.model;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 
 /**
  * Created by lukas on 05.11.16.
  */
-public class TestBlock implements BlockModel {
+public class TestBasicBlock implements BasicBlockModel {
 
     private final Location location;
 
-    public TestBlock(Location location) {
+    private boolean spawned;
+
+    public TestBasicBlock(Location location) {
         this.location = location;
     }
 
@@ -28,5 +30,12 @@ public class TestBlock implements BlockModel {
     @Override
     public void SpawnTask() {
         location.getBlock().setType(getBlockMaterial());
+
+        this.spawned = true;
+    }
+
+    @Override
+    public boolean isSpawned() {
+        return spawned;
     }
 }

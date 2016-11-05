@@ -6,15 +6,13 @@ public class DevathonPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        // put your enable code here
-
         System.out.println("Enabled!");
+
+        getServer().getPluginManager().registerEvents(new CommandHandler(), this);
     }
 
     @Override
     public void onDisable() {
-        // put your disable code here
-
         System.out.println("Disabled!");
     }
 }
