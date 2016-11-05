@@ -1,7 +1,7 @@
-name: Devathon Project
+name: Devathon-Plugin-Submission
 description: A project for the Devathon contest
 version: 1.0.0
 author: Sakul6499
 
-main: org.devathon.contest2016.DevathonPlugin
+main: de.sakul6499.devathon.Devathon
 

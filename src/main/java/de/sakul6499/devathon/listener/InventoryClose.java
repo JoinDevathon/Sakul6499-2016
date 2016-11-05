@@ -1,4 +1,4 @@
-package org.devathon.contest2016.listener;
+package de.sakul6499.devathon.listener;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

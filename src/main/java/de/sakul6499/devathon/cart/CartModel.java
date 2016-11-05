@@ -1,12 +1,15 @@
-package org.devathon.contest2016.cart;
+package de.sakul6499.devathon.cart;
 
+import com.google.common.collect.Lists;
+import de.sakul6499.devathon.JSONLocation;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_10_R1.entity.CraftMinecartChest;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
-import org.devathon.contest2016.JSONLocation;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -16,22 +19,15 @@ import java.util.UUID;
 /**
  * Created by lukas on 05.11.16.
  */
-public final class BasicCart {
+public final class CartModel {
 
-    public static BasicCart FromJSON(String json) throws ParseException {
+    public static CartModel FromJSON(String json) throws ParseException {
         JSONObject jsonObject = (JSONObject) new JSONParser().parse(json);
 
-        String name = (String) jsonObject.get("name");
-
-        Object object = jsonObject.get("location");
-        System.out.println(object.getClass().getName());
-        System.out.println((String) object);
-
-        JSONLocation location = JSONLocation.FromJSON((String) object);
-
-        System.out.println(name + " " + location);
-
-        return null;
+        return new CartModel(
+                (String) jsonObject.get("name"),
+                JSONLocation.FromJSON((String) jsonObject.get("location"))
+        );
     }
 
     private final UUID cartID;
@@ -46,17 +42,22 @@ public final class BasicCart {
     private CraftMinecartChest cart;
     private ArmorStand itemHolder;
 
-    public BasicCart(String name, JSONLocation location) {
+    public CartModel(String name, JSONLocation location) {
         this.name = name;
         this.location = location;
     }
-    
-    public BasicCart(String name, Location location) {
+
+    public CartModel(String name, Location location) {
         this.name = name;
         this.location = new JSONLocation(location);
     }
 
-    public final void spawn() {
+    public final CartModel spawn() {
+        if (spawned()) {
+            update();
+            return null;
+        }
+
         cart = (CraftMinecartChest) location.getWorld().spawnEntity(new Location(location.getWorld(), location.getNormalX(), location.getNormalY(), location.getNormalZ()), EntityType.MINECART_CHEST);
         cart.setInvulnerable(true);
         cart.setGravity(false);
@@ -72,9 +73,39 @@ public final class BasicCart {
         itemHolder.setGravity(false);
         itemHolder.setBasePlate(false);
         itemHolder.setVisible(false);
+
+        return this;
     }
 
-    // TODO: update
+    public final CartModel kill(boolean drop) {
+        if (cart != null && !cart.isDead()) cart.remove();
+        if (itemHolder != null && !itemHolder.isDead()) itemHolder.remove();
+
+        if (drop) {
+            ItemStack dropStack = new ItemStack(Material.STORAGE_MINECART);
+            ItemMeta dropMeta = dropStack.getItemMeta();
+
+            dropMeta.setDisplayName(name);
+            dropMeta.addEnchant(Enchantment.LURE, 10, true);
+            dropMeta.setLore(Lists.newArrayList("Devathon Cart"));
+
+            dropStack.setItemMeta(dropMeta);
+            location.getWorld().dropItem(location.toBukkitLocation(), dropStack);
+        }
+
+        return this;
+    }
+
+    public final CartModel kill() {
+        return kill(true);
+    }
+
+    public final CartModel update() {
+        kill(false);
+        spawn();
+
+        return this;
+    }
 
     public final boolean spawned() {
         return cart != null && itemHolder != null;
@@ -104,5 +135,15 @@ public final class BasicCart {
         jsonObject.put("location", location.toString());
         
         return jsonObject.toJSONString();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!obj.getClass().isInstance(this)) {
+            return false;
+        }
+
+        CartModel cart = (CartModel) obj;
+        return cart.getCartID().equals(cartID);
     }
 }

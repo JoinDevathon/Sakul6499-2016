@@ -1,10 +1,10 @@
-package org.devathon.contest2016;
+package de.sakul6499.devathon;
 
+import de.sakul6499.devathon.cart.CartManager;
+import de.sakul6499.devathon.cart.CartModel;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.devathon.contest2016.cart.BasicCart;
-import org.json.simple.parser.ParseException;
 
 /**
  * Created by lukas on 05.11.16.
@@ -17,17 +17,10 @@ public class CommandHandler implements Listener {
         String[] commandString = event.getMessage().split(" ");
         switch (commandString[0].toLowerCase()) {
             case "/spawn":
-                BasicCart basicCart = new BasicCart("TestSpawnCart", event.getPlayer().getLocation());
-                basicCart.spawn();
-
-                System.out.println(basicCart.toString());
-                try {
-                    BasicCart.FromJSON(basicCart.toString());
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-
                 event.setCancelled(true);
+                if (!CartManager.GetInstance().registerCart(new CartModel("TestSpawnCart", event.getPlayer().getLocation()).spawn())) {
+                    event.getPlayer().sendMessage("Failed to register a new cart model!");
+                }
                 break;
             default:
                 System.out.println("Unknown command!");

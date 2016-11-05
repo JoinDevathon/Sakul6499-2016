@@ -1,4 +1,4 @@
-package org.devathon.contest2016;
+package de.sakul6499.devathon;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -142,6 +142,66 @@ public final class JSONLocation {
 
     public Location toNormalLocation() {
         return new Location(getWorld(), getNormalX(), getNormalY(), getNormalZ(), getYaw(), getPitch());
+    }
+
+    public boolean fullEqual(JSONLocation location) {
+        return getWorldID() == location.getWorldID() &&
+                getX() == location.getX() &&
+                getY() == location.getY() &&
+                getZ() == location.getZ() &&
+                getYaw() == location.getYaw() &&
+                getPitch() == location.getPitch();
+    }
+
+    public boolean fullNormalEqual(JSONLocation location) {
+        return getWorldID() == location.getWorldID() &&
+                getNormalX() == location.getNormalX() &&
+                getNormalY() == location.getNormalY() &&
+                getNormalZ() == location.getNormalZ() &&
+                getYaw() == location.getYaw() &&
+                getPitch() == location.getPitch();
+    }
+
+    public boolean coordinatesEqual(JSONLocation location) {
+        return getWorldID() == location.getWorldID() &&
+                getX() == location.getX() &&
+                getY() == location.getY() &&
+                getZ() == location.getZ();
+    }
+
+    public boolean coordinatesNormalEqual(JSONLocation location) {
+        if (!getWorldID().equals(location.getWorldID())) {
+            System.out.println("1");
+
+            System.out.println(getWorldID() + " <-> " + location.getWorldID());
+            return false;
+        }
+
+        if (getNormalX() != location.getNormalX()) {
+            System.out.println("2");
+
+            System.out.println(getNormalX() + " <-> " + location.getNormalX());
+            return false;
+        }
+
+        if (getNormalY() != location.getNormalY()) {
+            System.out.println("3");
+            return false;
+        }
+
+        if (getNormalZ() != location.getNormalZ()) {
+            System.out.println("4");
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!obj.getClass().isInstance(this)) return false;
+
+        return fullNormalEqual((JSONLocation) obj);
     }
 
     @Override
