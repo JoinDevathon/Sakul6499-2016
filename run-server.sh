@@ -25,6 +25,10 @@ if [ ! -d "server/plugins" ]; then
     mkdir -p server/plugins
 fi
 
+if [ ! -d "server/plugins/Devathon-Plugin-Submission/scripts" ]; then
+    mkdir -p server/plugins/Devathon-Plugin-Submission/scripts
+fi
+
 if [ ! -f "server/spigot.jar" ]; then
     cp build/spigot-1.10.2.jar server/spigot.jar
 fi
@@ -49,7 +53,8 @@ while true; do
     else
         mvn clean install
     fi
-    cp target/DevathonProject-1.0-SNAPSHOT.jar server/plugins/DevathonProject-1.0-SNAPSHOT.jar
+    cp Core/target/DevathonProject-1.0-SNAPSHOT.jar server/plugins/
+    cp Test/target/Test-1.0-SNAPSHOT.jar server/plugins/Devathon-Plugin-Submission/scripts/
     cd server
 
     if [[ $(uname) == MING* ]]; then

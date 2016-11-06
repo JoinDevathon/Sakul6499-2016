@@ -38,4 +38,8 @@ public class BiObject<First, Second> {
     public void setSecond(Second second) {
         this.second = second;
     }
+
+    public boolean isValid() {
+        return first != null && second != null;
+    }
 }

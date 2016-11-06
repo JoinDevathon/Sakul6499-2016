@@ -1,10 +1,13 @@
 package de.sakul6499.devathon.cart;
 
+import de.sakul6499.devathon.api.Script;
 import de.sakul6499.devathon.util.JSONLocation;
 import org.bukkit.Location;
 import org.json.simple.JSONArray;
 
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -28,9 +31,11 @@ public final class CartManager {
     /* Class */
 
     private final LinkedList<CartModel> cartList;
+    private final HashMap<UUID, Class<?>> assocMap;
 
     private CartManager() {
         cartList = new LinkedList<>();
+        assocMap = new HashMap<>();
     }
 
     public boolean registerCart(CartModel cart) {
@@ -45,6 +50,16 @@ public final class CartManager {
 
         cartList.push(cart);
         return true;
+    }
+
+    public void assoc(UUID cartID, Class<?> assocClass) {
+        assocMap.put(cartID, assocClass);
+
+        System.out.println("Assoc: " + cartID + " with: " + assocClass.getName());
+    }
+
+    public void assoc(CartModel cartModel, Class<?> assocClass) {
+        assoc(cartModel.getCartID(), assocClass);
     }
 
     public void spawnAll() {
@@ -116,6 +131,15 @@ public final class CartManager {
 
     public CartModel getByName(String name) {
         return cartList.stream().filter(Cart -> Cart.getName().equals(name)).findFirst().orElse(null);
+    }
+
+    public CartModel getByScriptClass(Class<?> cls) {
+        Map.Entry<UUID, Class<?>> assoc = assocMap.entrySet().stream().filter(Entry -> Entry.getValue().equals(cls)).findFirst().orElse(null);
+        if(assoc != null) {
+            return getByID(assoc.getKey());
+        }
+
+        return null;
     }
 
     public CartModel getByLocation(Location location) {

@@ -6,10 +6,10 @@ import de.sakul6499.devathon.listener.ChatListener;
 import de.sakul6499.devathon.listener.CreateListener;
 import de.sakul6499.devathon.listener.DamageListener;
 import de.sakul6499.devathon.listener.InventoryClose;
+import de.sakul6499.devathon.script.ScriptHeap;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,6 +17,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class Devathon extends JavaPlugin {
+
+    private final static File SCRIPTS_FOLDER;
+
+    static {
+        SCRIPTS_FOLDER = new File("scripts");
+    }
 
     public static JavaPlugin PLUGIN_INSTANCE;
 
@@ -45,7 +51,18 @@ public class Devathon extends JavaPlugin {
                     }
                 }
             }
-        } catch (IOException | ParseException e) {
+
+            File[] files = SCRIPTS_FOLDER.listFiles((dir, name) -> name.endsWith(".jar"));
+            if (files == null) {
+                System.out.println("No Plugins found!");
+            } else {
+                for (File file : files) {
+                    ScriptHeap.GetInstance().createPlugin(file);
+                }
+
+                ScriptHeap.GetInstance().startup();
+            }
+        } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Something gone wrong during startup!");
         }
@@ -58,6 +75,8 @@ public class Devathon extends JavaPlugin {
         CartManager.GetInstance().killAll();
 
         try {
+            ScriptHeap.GetInstance().shutdown();
+
             File cartFile = new File(getDataFolder(), "carts.json");
             if (!cartFile.getParentFile().exists()) {
                 cartFile.getParentFile().mkdirs();

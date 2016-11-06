@@ -4,12 +4,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>de.sakul6499</groupId>
-    <artifactId>DevathonProject</artifactId>
-    <version>1.0-SNAPSHOT</version>
+	<parent>
+		<groupId>de.sakul6499</groupId>
+    	<artifactId>DevathonProject</artifactId>
+    	<version>1.0-SNAPSHOT</version>
+	</parent>
 
-	<packaging>pom</packaging>
-	<name>Parent</name>
+    <artifactId>Test</artifactId>
+	<packaging>jar</packaging>
+
+	<name>Test Part</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -17,8 +21,11 @@
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
-	<modules>
-		<module>Core</module>
-		<module>Test</module>
-	</modules>
+	<dependencies>
+		<dependency>
+            <groupId>de.sakul6499</groupId>
+            <artifactId>Core</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+	</dependencies>
 </project>

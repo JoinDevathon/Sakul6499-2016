@@ -1,6 +1,9 @@
 package de.sakul6499.devathon.listener;
 
 import de.sakul6499.devathon.Devathon;
+import de.sakul6499.devathon.api.Script;
+import de.sakul6499.devathon.script.ScriptHeap;
+import de.sakul6499.devathon.script.ScriptInstance;
 import de.sakul6499.devathon.util.JSONLocation;
 import de.sakul6499.devathon.cart.CartManager;
 import de.sakul6499.devathon.cart.CartModel;
@@ -32,16 +35,27 @@ public class ChatListener implements Listener {
         } else {
             event.getPlayer().sendMessage("Here's your JSON: " + cartModel.toString());
 
-            Bukkit.getScheduler().runTask(Devathon.PLUGIN_INSTANCE, () -> {
-                for(Facing facing : Facing.values()) {
-                    cartModel.setFacing(facing);
+//            Bukkit.getScheduler().runTask(Devathon.PLUGIN_INSTANCE, () -> {
+//                for(Facing facing : Facing.values()) {
+//                    cartModel.setFacing(facing);
+//
+//                    for(Direction direction : Direction.values()) {
+//                        cartModel.move(direction);
+//                        cartModel.update();
+//                    }
+//                }
+//            });
 
-                    for(Direction direction : Direction.values()) {
-                        cartModel.move(direction);
-                        cartModel.update();
-                    }
+            if(split.length > 1) {
+                ScriptInstance scriptInstance = ScriptHeap.GetInstance().getPluginInstanceByName(split[1]);
+                if(scriptInstance == null) {
+                    event.getPlayer().sendMessage("Script invalid!");
+
+                    return;
                 }
-            });
+
+                CartManager.GetInstance().assoc(cartModel, scriptInstance.getAssocClass());
+            }
         }
     }
 

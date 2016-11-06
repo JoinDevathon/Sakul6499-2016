@@ -1,27 +1,42 @@
 apply plugin: 'base'
-apply plugin: 'java'
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+allprojects {
+    apply plugin: 'java'
+}
 
-repositories {
-    mavenCentral()
+subprojects {
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
 
-    maven {
-        name 'spigot-repo'
-        url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots'
+    repositories {
+        mavenCentral()
+
+        maven {
+            name 'spigot-repo'
+            url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots'
+        }
+
+        maven {
+            name = 'sonatype'
+            url = 'https://oss.sonatype.org/content/groups/public/'
+        }
     }
 
-    maven {
-        name = 'sonatype'
-        url = 'https://oss.sonatype.org/content/groups/public/'
+    dependencies {
+        compile 'org.spigotmc:spigot-api:1.10.2-R0.1-SNAPSHOT'
     }
 }
 
-dependencies {
-    compile 'org.spigotmc:spigot-api:1.10.2-R0.1-SNAPSHOT'
+project(':Core') {
+    dependencies {
+        compile files('libs/spigot.jar')
+    }
+}
 
-    compile files('libs/spigot.jar')
+project(':Test') {
+    dependencies {
+        compile project(':Core')
+    }
 }
 
 clean {
@@ -33,12 +48,17 @@ task copyServer(type: Copy) {
     into "server/"
 }
 
-task copyCorePlugin(type: Copy, dependsOn: [':build', ':copyServer']) {
-    from project.buildDir.getAbsolutePath() + "/libs"
+task copyCorePlugin(type: Copy, dependsOn: [':build']) {
+    from project(':Core').buildDir.getAbsolutePath() + "/libs"
     into 'server/plugins/'
 }
 
-task run(type: JavaExec, dependsOn: ['copyCorePlugin']) {
+task copyTestPlugin(type: Copy, dependsOn: [':build']) {
+    from project(':Test').buildDir.getAbsolutePath() + "/libs"
+    into 'server/plugins/Devathon-Plugin-Submission/scipts/'
+}
+
+task run(type: JavaExec, dependsOn: [':copyServer', ':copyCorePlugin', ':copyTestPlugin']) {
     doFirst {
         standardInput = System.in
         standardOutput = System.out

@@ -1,6 +1,10 @@
-# maven stuff
+# build
 build/
+
+# server
 server/
+
+# maven stuff
 target/
 
 # idea files
@@ -9,4 +13,6 @@ target/
 
 # gradle files
 .gradle/
+
+# libs (only spigot.jar)
 libs/
