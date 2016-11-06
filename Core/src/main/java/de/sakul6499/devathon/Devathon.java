@@ -52,6 +52,7 @@ public class Devathon extends JavaPlugin {
                 }
             }
 
+            System.out.println("Searching for script plugins: " + SCRIPTS_FOLDER.getAbsolutePath());
             File[] files = SCRIPTS_FOLDER.listFiles((dir, name) -> name.endsWith(".jar"));
             if (files == null) {
                 System.out.println("No Plugins found!");

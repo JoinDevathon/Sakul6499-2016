@@ -53,7 +53,7 @@ while true; do
     else
         mvn clean install
     fi
-    cp Core/target/DevathonProject-1.0-SNAPSHOT.jar server/plugins/
+    cp Core/target/Core-1.0-SNAPSHOT.jar server/plugins/
     cp Test/target/Test-1.0-SNAPSHOT.jar server/plugins/Devathon-Plugin-Submission/scripts/
     cd server
 

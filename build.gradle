@@ -48,14 +48,14 @@ task copyServer(type: Copy) {
     into "server/"
 }
 
-task copyCorePlugin(type: Copy, dependsOn: [':build']) {
+task copyCorePlugin(type: Copy, dependsOn: [':Core:build']) {
     from project(':Core').buildDir.getAbsolutePath() + "/libs"
     into 'server/plugins/'
 }
 
-task copyTestPlugin(type: Copy, dependsOn: [':build']) {
+task copyTestPlugin(type: Copy, dependsOn: [':Test:build']) {
     from project(':Test').buildDir.getAbsolutePath() + "/libs"
-    into 'server/plugins/Devathon-Plugin-Submission/scipts/'
+    into 'server/plugins/Devathon-Plugin-Submission/scripts/'
 }
 
 task run(type: JavaExec, dependsOn: [':copyServer', ':copyCorePlugin', ':copyTestPlugin']) {
@@ -69,4 +69,16 @@ task run(type: JavaExec, dependsOn: [':copyServer', ':copyCorePlugin', ':copyTes
     systemProperties = ['com.mojang.eula.agree': 'true']
     args('--world-dir', './worlds/')
     workingDir = "server/"
+}
+
+gradle.taskGraph.whenReady { graph ->
+    for (Task t : graph.getAllTasks()) {
+        if (t.getProject() == rootProject) {
+            continue
+        }
+
+        if (t.getName().equals("run")) {
+            t.deleteAllActions()
+        }
+    }
 }
