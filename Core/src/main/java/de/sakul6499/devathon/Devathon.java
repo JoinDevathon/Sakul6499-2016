@@ -5,7 +5,6 @@ import de.sakul6499.devathon.cart.CartModel;
 import de.sakul6499.devathon.listener.ChatListener;
 import de.sakul6499.devathon.listener.CreateListener;
 import de.sakul6499.devathon.listener.DamageListener;
-import de.sakul6499.devathon.listener.InventoryClose;
 import de.sakul6499.devathon.script.ScriptHeap;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.json.simple.JSONArray;
@@ -34,7 +33,6 @@ public class Devathon extends JavaPlugin {
     @Override
     public void onEnable() {
         getServer().getPluginManager().registerEvents(new ChatListener(), this);
-        getServer().getPluginManager().registerEvents(new InventoryClose(), this);
         getServer().getPluginManager().registerEvents(new DamageListener(), this);
         getServer().getPluginManager().registerEvents(new CreateListener(), this);
 
@@ -58,10 +56,9 @@ public class Devathon extends JavaPlugin {
                 System.out.println("No Plugins found!");
             } else {
                 for (File file : files) {
+                    System.out.println("Found: " + file.getName());
                     ScriptHeap.GetInstance().createPlugin(file);
                 }
-
-                ScriptHeap.GetInstance().startup();
             }
         } catch (Exception e) {
             e.printStackTrace();

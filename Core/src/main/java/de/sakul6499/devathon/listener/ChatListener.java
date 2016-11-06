@@ -28,24 +28,10 @@ public class ChatListener implements Listener {
         String[] split = event.getMessage().split(" ");
         String name = split[0].substring(1, split[0].length());
 
-        // TODO
         CartModel cartModel = CartManager.GetInstance().getByName(name);
         if(cartModel == null) {
             event.getPlayer().sendMessage("CartModel '" + name + "' does not exist!");
         } else {
-            event.getPlayer().sendMessage("Here's your JSON: " + cartModel.toString());
-
-//            Bukkit.getScheduler().runTask(Devathon.PLUGIN_INSTANCE, () -> {
-//                for(Facing facing : Facing.values()) {
-//                    cartModel.setFacing(facing);
-//
-//                    for(Direction direction : Direction.values()) {
-//                        cartModel.move(direction);
-//                        cartModel.update();
-//                    }
-//                }
-//            });
-
             if(split.length > 1) {
                 ScriptInstance scriptInstance = ScriptHeap.GetInstance().getPluginInstanceByName(split[1]);
                 if(scriptInstance == null) {
@@ -54,7 +40,10 @@ public class ChatListener implements Listener {
                     return;
                 }
 
-                CartManager.GetInstance().assoc(cartModel, scriptInstance.getAssocClass());
+                Bukkit.getScheduler().runTask(Devathon.PLUGIN_INSTANCE, () -> {
+                    CartManager.GetInstance().assoc(cartModel, scriptInstance.getAssocClass());
+                    scriptInstance.startup();
+                });
             }
         }
     }

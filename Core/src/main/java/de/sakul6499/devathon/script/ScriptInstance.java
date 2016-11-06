@@ -54,6 +54,7 @@ public final class ScriptInstance {
     }
 
     public void startup() {
+        System.out.println("State: " + scriptState);
         if (!this.scriptState.canLaunch())
             throw new IllegalStateException("Script can not be launched!");
 

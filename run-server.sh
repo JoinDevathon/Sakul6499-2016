@@ -25,7 +25,7 @@ if [ ! -d "server/plugins" ]; then
     mkdir -p server/plugins
 fi
 
-if [ ! -d "server/plugins/Devathon-Plugin-Submission/scripts" ]; then
+if [ ! -d "server/scripts" ]; then
     mkdir -p server/plugins/Devathon-Plugin-Submission/scripts
 fi
 

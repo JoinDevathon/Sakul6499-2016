@@ -1,7 +1,9 @@
 package de.sakul6499.devathon.cart;
 
 import com.google.common.collect.Lists;
+import de.sakul6499.devathon.Devathon;
 import de.sakul6499.devathon.util.JSONLocation;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -85,10 +87,7 @@ public final class CartModel {
         chestHolder.setVisible(false);
         chestHolder.setSmall(true);
 
-        // TODO: Rotation not working
-//        int next_facing = facing.ordinal() + 1;
-//        if(next_facing >= Facing.values().length) next_facing = 0;
-//        itemHolder = (ArmorStand) location.getWorld().spawnEntity(new Location(location.getWorld(), location.getNormalX() + 0.55, location.getNormalY() - 1.8, location.getNormalZ() + 0.5, Facing.values()[next_facing].getYawVal(), 0), EntityType.ARMOR_STAND);
+        // TODO facing not fully working
         itemHolder = (ArmorStand) location.getWorld().spawnEntity(new Location(location.getWorld(), location.getNormalX() + 0.55, location.getNormalY() - 1.8, location.getNormalZ() + 0.5, Facing.SOUTH.getYawVal(), 0), EntityType.ARMOR_STAND);
         itemHolder.setHelmet(new ItemStack(Material.DIAMOND_PICKAXE));
         itemHolder.setInvulnerable(true);
@@ -222,11 +221,11 @@ public final class CartModel {
     @Override
     public String toString() {
         JSONObject jsonObject = new JSONObject();
-        
+
         jsonObject.put("name", name);
         jsonObject.put("location", location.toString());
         jsonObject.put("facing", facing.ordinal());
-        
+
         return jsonObject.toJSONString();
     }
 

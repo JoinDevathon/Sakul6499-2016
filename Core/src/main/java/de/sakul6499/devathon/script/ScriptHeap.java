@@ -1,5 +1,8 @@
 package de.sakul6499.devathon.script;
 
+import de.sakul6499.devathon.Devathon;
+import org.bukkit.Bukkit;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -67,16 +70,10 @@ public class ScriptHeap {
         heap.remove(scriptInstance);
     }
 
-    public void startup() {
-        for (Map.Entry<ScriptInstance, ScriptLoader> entry : heap.entrySet()) {
-            if (entry.getKey().getScriptState().canLaunch()) {
-                try {
-                    entry.getKey().startup();
-                } catch (Exception e) {
-                    throw new IllegalStateException("Exception during startup: " + e.getMessage());
-                }
-            }
-        }
+    public void ExitScript(Class<?> cls) {
+        Bukkit.getScheduler().runTaskLater(Devathon.PLUGIN_INSTANCE, () -> {
+            heap.keySet().stream().filter(scriptInstance -> scriptInstance.getAssocClass().equals(cls)).forEach(ScriptInstance::shutdown);
+        }, 30);
     }
 
     public void shutdown() {
