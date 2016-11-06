@@ -6,6 +6,12 @@ It will spawn a little cart (also known as Turtle).
 You can easily control this cart by using a self coded Script (within Java).  
 
 > Please Note: Due to lack of time not everything might work a 100%. I probably will continue this project in some time!
+
+## Project Layout
+| Name | Description                                      |
+| ---- | ------------------------------------------------ |
+| Core | The Plugin itself, it will load the scripts etc. |
+| Test | An Example Script                                |
  
 ## Commands
 | Name | Function                                                                                                   |
