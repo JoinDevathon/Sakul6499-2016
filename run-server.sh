@@ -54,7 +54,7 @@ while true; do
         mvn clean install
     fi
     cp Core/target/Core-1.0-SNAPSHOT.jar server/plugins/
-    cp Test/target/Test-1.0-SNAPSHOT.jar server/plugins/Devathon-Plugin-Submission/scripts/
+    cp Test/target/Test-1.0-SNAPSHOT.jar server/scripts/
     cd server
 
     if [[ $(uname) == MING* ]]; then

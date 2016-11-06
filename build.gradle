@@ -55,7 +55,7 @@ task copyCorePlugin(type: Copy, dependsOn: [':Core:build']) {
 
 task copyTestPlugin(type: Copy, dependsOn: [':Test:build']) {
     from project(':Test').buildDir.getAbsolutePath() + "/libs"
-    into 'server/plugins/Devathon-Plugin-Submission/scripts/'
+    into 'server/plugins/scripts/'
 }
 
 task run(type: JavaExec, dependsOn: [':copyServer', ':copyCorePlugin', ':copyTestPlugin']) {
