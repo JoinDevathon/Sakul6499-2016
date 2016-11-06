@@ -4,6 +4,8 @@ Author: @Sakul6499
 I decided to make a small but kinda powerful plugin.  
 It will spawn a little cart (also known as Turtle).  
 You can easily control this cart by using a self coded Script (within Java).  
+
+> Please Note: Due to lack of time not everything might work a 100%. I probably will continue this project in some time!
  
 ## Commands
 | Name | Function                                                                                                   |
