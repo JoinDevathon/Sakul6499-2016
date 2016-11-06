@@ -4,7 +4,7 @@ import de.sakul6499.devathon.cart.CartManager;
 import de.sakul6499.devathon.cart.CartModel;
 import de.sakul6499.devathon.listener.ChatListener;
 import de.sakul6499.devathon.listener.CreateListener;
-import de.sakul6499.devathon.listener.DeathListener;
+import de.sakul6499.devathon.listener.DamageListener;
 import de.sakul6499.devathon.listener.InventoryClose;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.json.simple.JSONArray;
@@ -18,11 +18,18 @@ import java.io.IOException;
 
 public class Devathon extends JavaPlugin {
 
+    public static JavaPlugin PLUGIN_INSTANCE;
+
+    @Override
+    public void onLoad() {
+        PLUGIN_INSTANCE = this;
+    }
+
     @Override
     public void onEnable() {
         getServer().getPluginManager().registerEvents(new ChatListener(), this);
         getServer().getPluginManager().registerEvents(new InventoryClose(), this);
-        getServer().getPluginManager().registerEvents(new DeathListener(), this);
+        getServer().getPluginManager().registerEvents(new DamageListener(), this);
         getServer().getPluginManager().registerEvents(new CreateListener(), this);
 
         try {

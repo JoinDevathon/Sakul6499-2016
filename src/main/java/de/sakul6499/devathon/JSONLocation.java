@@ -96,6 +96,10 @@ public final class JSONLocation {
         this.x = x;
     }
 
+    public void addX(double x) {
+        this.x += x;
+    }
+
     public double getY() {
         return y;
     }
@@ -106,6 +110,10 @@ public final class JSONLocation {
 
     public void setY(double y) {
         this.y = y;
+    }
+
+    public void addY(double y) {
+        this.y += y;
     }
 
     public double getZ() {
@@ -120,6 +128,10 @@ public final class JSONLocation {
         this.z = z;
     }
 
+    public void addZ(double z) {
+        this.z += z;
+    }
+
     public float getYaw() {
         return yaw;
     }
@@ -128,12 +140,20 @@ public final class JSONLocation {
         this.yaw = yaw;
     }
 
+    public void addYaw(float yaw) {
+        this.yaw += yaw;
+    }
+
     public float getPitch() {
         return pitch;
     }
 
     public void setPitch(float pitch) {
         this.pitch = pitch;
+    }
+
+    public void addPitch(float pitch) {
+        this.pitch += pitch;
     }
 
     public Location toBukkitLocation() {

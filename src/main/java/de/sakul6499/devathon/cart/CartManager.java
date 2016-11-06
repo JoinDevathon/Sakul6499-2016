@@ -93,6 +93,14 @@ public final class CartManager {
         return true;
     }
 
+    public boolean remove(String name) {
+        CartModel cartModel = getByName(name);
+        if(cartModel == null) return false;
+
+        remove(cartModel);
+        return true;
+    }
+
     public void remove(CartModel cartModel) {
         cartModel.kill();
         cartList.remove(cartModel);
@@ -104,6 +112,10 @@ public final class CartManager {
 
     public CartModel getByLocation(JSONLocation location) {
         return cartList.stream().filter(Cart -> Cart.getJSONLocation().coordinatesNormalEqual(location)).findFirst().orElse(null);
+    }
+
+    public CartModel getByName(String name) {
+        return cartList.stream().filter(Cart -> Cart.getName().equals(name)).findFirst().orElse(null);
     }
 
     public CartModel getByLocation(Location location) {
