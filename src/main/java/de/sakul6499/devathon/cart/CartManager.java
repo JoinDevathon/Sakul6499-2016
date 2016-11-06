@@ -1,6 +1,6 @@
 package de.sakul6499.devathon.cart;
 
-import de.sakul6499.devathon.JSONLocation;
+import de.sakul6499.devathon.util.JSONLocation;
 import org.bukkit.Location;
 import org.json.simple.JSONArray;
 

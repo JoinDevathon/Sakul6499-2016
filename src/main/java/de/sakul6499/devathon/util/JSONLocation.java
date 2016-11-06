@@ -1,5 +1,6 @@
-package de.sakul6499.devathon;
+package de.sakul6499.devathon.util;
 
+import de.sakul6499.devathon.api.Script;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;

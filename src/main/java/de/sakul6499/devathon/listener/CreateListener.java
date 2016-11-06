@@ -1,6 +1,6 @@
 package de.sakul6499.devathon.listener;
 
-import de.sakul6499.devathon.JSONLocation;
+import de.sakul6499.devathon.util.JSONLocation;
 import de.sakul6499.devathon.cart.CartManager;
 import de.sakul6499.devathon.cart.CartModel;
 import org.bukkit.Material;

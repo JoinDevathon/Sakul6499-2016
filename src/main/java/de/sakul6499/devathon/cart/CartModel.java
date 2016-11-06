@@ -1,9 +1,7 @@
 package de.sakul6499.devathon.cart;
 
 import com.google.common.collect.Lists;
-import de.sakul6499.devathon.Devathon;
-import de.sakul6499.devathon.JSONLocation;
-import org.bukkit.Bukkit;
+import de.sakul6499.devathon.util.JSONLocation;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -11,7 +9,6 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.scheduler.BukkitTask;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
